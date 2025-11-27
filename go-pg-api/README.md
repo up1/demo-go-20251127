@@ -120,6 +120,7 @@ List of URLs
 * GET http://localhost:8080/users/3
 
 ## 5. Working with deadlock in database
+* Using [WaitGroup](https://pkg.go.dev/sync#example-WaitGroup)
 
 Update in file `main.go`
 ```
