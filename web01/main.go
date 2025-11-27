@@ -9,7 +9,8 @@ import (
 
 func main() {
 	// Create a Gin router with default middleware (logger and recovery)
-	r := gin.Default()
+	r := gin.New()
+	r.Use(gin.Recovery())
 
 	// Define a simple GET endpoint
 	r.GET("/ping", func(c *gin.Context) {
