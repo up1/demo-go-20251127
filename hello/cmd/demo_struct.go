@@ -8,14 +8,13 @@ type User struct {
 	Age  int
 }
 
+func (u User) doSth() string {
+	return fmt.Sprintf("User %s is %d years old.", u.Name, u.Age)
+}
+
 func main() {
-	u1 := User{
-		Id:   1,
-		Name: "Alice",
-		Age:  30,
-	}
+	u1 := User{Id: 1, Name: "Alice", Age: 30}
 
 	fmt.Println(u1)
-	fmt.Println(u1.Id)
-	fmt.Println(u1.Name)
+	fmt.Println(u1.doSth())
 }
