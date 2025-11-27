@@ -10,3 +10,8 @@ services:
     volumes:
       - ./data/tables.sql:/docker-entrypoint-initdb.d/1.sql
       - ./data/data.sql:/docker-entrypoint-initdb.d/2.sql
+  
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
