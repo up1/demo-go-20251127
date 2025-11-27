@@ -50,7 +50,11 @@ func main() {
 
 	e := echo.New()
 
-	// Simple API endpoint
+	// Health check endpoint
+	e.GET("/health", func(c echo.Context) error {
+		return c.String(http.StatusOK, "OK")
+	})
+	// Simple API with database access
 	e.GET("/users/:id", getUser)
 	// Endpoint for simulating the deadlock
 	e.POST("/transfer_deadlock", simulateDeadlockHandler)

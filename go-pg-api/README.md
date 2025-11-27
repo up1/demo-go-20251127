@@ -119,3 +119,13 @@ List of URLs
 * GET http://localhost:8080/users/1
 * GET http://localhost:8080/users/3
 
+## 5. Performance testing
+* [Go-wrk](go install github.com/tsliwowicz/go-wrk@latest)
+* [Vegeta](https://github.com/tsenart/vegeta)
+
+```
+$go-wrk -c 500 -d 10 http://localhost:8080/health
+
+
+$go-wrk -c 500 -d 10 http://localhost:8080/users/1
+```
