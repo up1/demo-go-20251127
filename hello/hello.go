@@ -10,6 +10,7 @@ func SayHi() string {
 }
 
 // Private function
+// fff
 func doSth() (result string, err error) {
 	return "Hello Go 2025", nil
 }
