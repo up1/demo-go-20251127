@@ -1,0 +1,96 @@
+{
+	"info": {
+		"_postman_id": "7323255e-27ba-4974-8e31-1ce0660b0a3f",
+		"name": "user-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "1453931",
+		"_collection_link": "https://red-firefly-245852.postman.co/workspace/devops-workshop~057045a7-1a0c-4314-8f2c-dcb8eb2e8d13/collection/1453931-7323255e-27ba-4974-8e31-1ce0660b0a3f?action=share&source=collection_link&creator=1453931"
+	},
+	"item": [
+		{
+			"name": "Get user by id with success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"const response = pm.response.json();",
+							"",
+							"const schema = {",
+							"    type: \"object\",",
+							"    properties: {",
+							"        id: { type: \"integer\" },",
+							"        name: { type: \"string\" }",
+							"    },",
+							"    required: [\"id\", \"name\"]",
+							"};",
+							"",
+							"pm.test(\"Response matches JSON schema\", function () {",
+							"    pm.expect(tv4.validate(response, schema)).to.be.true;",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/users/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Get user by id with not found",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"const response = pm.response.json();",
+							"const schema = {",
+							"    type: \"object\",",
+							"    properties: {",
+							"        message: { type: \"string\" }",
+							"    },",
+							"    required: [\"message\"]",
+							"};",
+							"",
+							"pm.test(\"Response body matches JSON schema\", function () {",
+							"    const Ajv = require(\"ajv\");",
+							"    const ajv = new Ajv();",
+							"    const validate = ajv.compile(schema);",
+							"    const valid = validate(response);",
+							"    pm.expect(valid).to.be.true;",
+							"    if (!valid) {",
+							"        console.log(validate.errors);",
+							"    }",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/users/3"
+			},
+			"response": []
+		}
+	]
+}
