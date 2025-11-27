@@ -5,7 +5,13 @@ import (
 	"math/rand"
 )
 
+type MyRandom struct{}
+
+func (mr MyRandom) GetNumber() int {
+	return rand.Intn(10) + 1
+}
+
 func GenerateData() string {
-	randomNumber := rand.Intn(10) + 1
+	randomNumber := MyRandom{}.GetNumber()
 	return fmt.Sprintf("My Data %d", randomNumber)
 }
