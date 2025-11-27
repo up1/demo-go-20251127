@@ -2,6 +2,8 @@
 * Caching with Redis
 * Use prepared statement
 * Switch Database Driver (lib/pq vs pgx)
+  * https://github.com/jackc/pgx
+    * pgx includes an automatic statement cache
 * JSON Marshalling Optimization
 * Connection Pool Tuning
 * Database Indexing
