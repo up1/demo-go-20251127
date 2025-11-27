@@ -124,8 +124,12 @@ List of URLs
 * [Vegeta](https://github.com/tsenart/vegeta)
 
 ```
+# Install
+$go install github.com/tsliwowicz/go-wrk@latest
+
+# Testing without database
 $go-wrk -c 500 -d 10 http://localhost:8080/health
 
-
+# Testing with database
 $go-wrk -c 500 -d 10 http://localhost:8080/users/1
 ```
