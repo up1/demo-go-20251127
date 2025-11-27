@@ -1,7 +1,12 @@
 package main
 
-import "demo"
+import (
+	"demo"
+	"fmt"
+)
 
 func main() {
-	demo.SayHi()
+	result := demo.SayHi()
+	println(result)
+	fmt.Println(result)
 }
