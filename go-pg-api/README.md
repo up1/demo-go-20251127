@@ -85,7 +85,7 @@ func main() {
 
 	// Simple API endpoint
 	e.GET("/users/:id", getUser)
-    
+
 	e.Logger.Fatal(e.Start(":8080"))
 }
 
@@ -106,6 +106,16 @@ func getUser(c echo.Context) error {
 
 ## 4. Run in development mode
 ```
+# Start database
+$docker compose up -d
+$docker compose ps
+
+# Run server
 $go mod tidy
 $go run main.go
 ```
+
+List of URLs
+* GET http://localhost:8080/users/1
+* GET http://localhost:8080/users/3
+* POST http://localhost:8080/transfer_deadlock
