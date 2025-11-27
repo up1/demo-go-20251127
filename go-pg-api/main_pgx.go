@@ -98,6 +98,7 @@ func getUser(c echo.Context) error {
 	id := c.Param("id")
 	var user User
 
+	// Automatically prepared and reused statement
 	err := conn.QueryRow(context.Background(), "SELECT id, name FROM users WHERE id = $1", id).Scan(&user.ID, &user.Name)
 	if err != nil {
 		if err == pgx.ErrNoRows {
