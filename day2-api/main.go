@@ -10,9 +10,13 @@ type resource struct {
 	message string
 }
 
-func main() {
-	r := resource{message: "Hello, World v2!"}
+// Builder pattern => creational
+func NewResource(message string) resource {
+	return resource{message: message}
+}
 
+func main() {
+	r := NewResource("Hello, World v2!")
 	e := echo.New()
 	e.GET("/", hello("V1 Hello, World!"))
 	e.GET("/v2", r.hello2)
