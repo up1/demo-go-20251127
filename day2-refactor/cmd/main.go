@@ -9,6 +9,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/labstack/echo/v4"
 )
@@ -48,6 +49,9 @@ func (r *StubRepository) GetByID(ctx context.Context, id string) (*demo.User, er
 	userID, err := strconv.Atoi(id)
 	if err != nil {
 		return nil, fmt.Errorf("invalid user ID: %w", err)
+	}
+	if userID == 5 {
+		return nil, pgx.ErrNoRows
 	}
 	return &demo.User{ID: userID, Name: "Stub User"}, nil
 }
