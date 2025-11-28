@@ -16,16 +16,14 @@ type User struct {
 }
 
 type UserHandler struct {
-	DB *pgxpool.Pool
+	Repo IUserRepository
 }
 
 // Simple API handler example
 func (h *UserHandler) GetUser(c echo.Context) error {
 	id := c.Param("id")
-	var user User
 
-	// Automatically prepared and reused statement
-	err := h.DB.QueryRow(context.Background(), "SELECT id, name FROM users WHERE id = $1", id).Scan(&user.ID, &user.Name)
+	user, err := h.Repo.GetByID(context.Background(), id)
 	if err != nil {
 		if err == pgx.ErrNoRows {
 			return c.JSON(http.StatusNotFound, echo.Map{"message": "User not found"})
@@ -34,4 +32,21 @@ func (h *UserHandler) GetUser(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, user)
+}
+
+// ------- User Repository
+type IUserRepository interface {
+	GetByID(ctx context.Context, id string) (*User, error)
+}
+type UserPostgresRepository struct {
+	DB *pgxpool.Pool
+}
+
+func (r *UserPostgresRepository) GetByID(ctx context.Context, id string) (*User, error) {
+	var user User
+	err := r.DB.QueryRow(ctx, "SELECT id, name FROM users WHERE id = $1", id).Scan(&user.ID, &user.Name)
+	if err != nil {
+		return nil, err
+	}
+	return &user, nil
 }

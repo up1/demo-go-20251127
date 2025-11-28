@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -40,10 +41,22 @@ func initDB() {
 	fmt.Println("Successfully connected to PostgreSQL!")
 }
 
-//
+type StubRepository struct{}
+
+func (r *StubRepository) GetByID(ctx context.Context, id string) (*demo.User, error) {
+	fmt.Println("Called stub ...")
+	userID, err := strconv.Atoi(id)
+	if err != nil {
+		return nil, fmt.Errorf("invalid user ID: %w", err)
+	}
+	return &demo.User{ID: userID, Name: "Stub User"}, nil
+}
 
 func main() {
-	user := demo.UserHandler{DB: nil}
+
+	user := demo.UserHandler{
+		Repo: &StubRepository{},
+	}
 
 	e := echo.New()
 
