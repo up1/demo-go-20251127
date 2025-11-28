@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 type resource struct {
@@ -18,6 +19,7 @@ func NewResource(message string) resource {
 func main() {
 	r := NewResource("Hello, World v2!")
 	e := echo.New()
+	e.Use(middleware.Logger())
 	e.GET("/", hello("V1 Hello, World!"))
 	e.GET("/v2", r.hello2)
 	e.Logger.Fatal(e.Start(":8080"))
