@@ -3,6 +3,7 @@ package main
 import (
 	"net/http"
 
+	"github.com/labstack/echo-contrib/echoprometheus"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 
@@ -30,6 +31,10 @@ func main() {
 	r := NewResource("Hello, World v2!")
 	e := echo.New()
 	e.Use(middleware.Logger())
+
+	// Add prometheus middleware
+	e.Use(echoprometheus.NewMiddleware("myapp"))   // adds middleware to gather metrics
+	e.GET("/metrics", echoprometheus.NewHandler()) // adds route to serve gathered metrics
 
 	e.GET("/", hello("V1 Hello, World!"))
 	e.GET("/v2", r.hello2)
