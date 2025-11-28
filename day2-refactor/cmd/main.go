@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"demo"
 	"fmt"
 	"log"
 	"net/http"
@@ -58,7 +59,7 @@ func main() {
 		return c.String(http.StatusOK, "OK")
 	})
 	// Simple API with database access
-	e.GET("/users/:id", getUser)
+	e.GET("/users/:id", demo.GetUser)
 
 	e.Logger.Fatal(e.Start(":8080"))
 }

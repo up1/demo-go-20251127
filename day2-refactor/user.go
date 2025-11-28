@@ -9,7 +9,7 @@ import (
 )
 
 // Simple API handler example
-func getUser(c echo.Context) error {
+func GetUser(c echo.Context) error {
 	id := c.Param("id")
 	var user User
 
