@@ -5,7 +5,6 @@ import (
 
 	"github.com/labstack/echo-contrib/echoprometheus"
 	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
 
 	// Swagger
 	_ "api/docs" // Import generated swagger docs
@@ -30,7 +29,7 @@ func NewResource(message string) resource {
 func main() {
 	r := NewResource("Hello, World v2!")
 	e := echo.New()
-	e.Use(middleware.Logger())
+	// e.Use(middleware.Logger())
 
 	// Add prometheus middleware
 	e.Use(echoprometheus.NewMiddleware("myapp"))   // adds middleware to gather metrics
