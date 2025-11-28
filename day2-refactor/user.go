@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/labstack/echo/v4"
 )
 
@@ -36,4 +37,16 @@ func (h *UserHandler) GetUser(c echo.Context) error {
 // ------- User Repository
 type IUserRepository interface {
 	GetByID(ctx context.Context, id string) (*User, error)
+}
+type UserPostgresRepository struct {
+	DB *pgxpool.Pool
+}
+
+func (r *UserPostgresRepository) GetByID(ctx context.Context, id string) (*User, error) {
+	var user User
+	err := r.DB.QueryRow(ctx, "SELECT id, name FROM users WHERE id = $1", id).Scan(&user.ID, &user.Name)
+	if err != nil {
+		return nil, err
+	}
+	return &user, nil
 }
