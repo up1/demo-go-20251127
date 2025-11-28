@@ -16,6 +16,11 @@ services:
     ports:
       - "6379:6379"
 
+  valkey:
+    image: valkey/valkey:9
+    ports:
+      - "6379:6379"
+
   mysql:
     image: mysql:8
     ports:
