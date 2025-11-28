@@ -11,6 +11,7 @@ import (
 )
 
 var db *sql.DB // Global database connection pool
+var stmt *sql.Stmt
 
 func initDB() {
 	var err error
@@ -29,6 +30,12 @@ func initDB() {
 		panic(err)
 	}
 
+	// Prepare the statement once
+	stmt, err = db.Prepare("SELECT content FROM messages WHERE id = ?")
+	if err != nil {
+		panic(err)
+	}
+
 	fmt.Println("Connection to mysql !!")
 
 }
@@ -38,6 +45,7 @@ func initDB() {
 func main() {
 	initDB()
 	defer db.Close()
+	defer stmt.Close()
 
 	e := echo.New()
 
@@ -50,7 +58,7 @@ func main() {
 	e.GET("/messages/:id", func(c echo.Context) error {
 		id := c.Param("id")
 		var message string
-		err := db.QueryRow("SELECT content FROM messages WHERE id = ?", id).Scan(&message)
+		err := stmt.QueryRowContext(c.Request().Context(), id).Scan(&message)
 		if err != nil {
 			if err == sql.ErrNoRows {
 				return c.String(http.StatusNotFound, "Message not found")
