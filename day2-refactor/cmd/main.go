@@ -12,12 +12,6 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-// User struct for data mapping
-type User struct {
-	ID   int    `json:"id"`
-	Name string `json:"name"`
-}
-
 var conn *pgxpool.Pool // Global database connection pool
 
 func initDB() {
@@ -49,8 +43,7 @@ func initDB() {
 //
 
 func main() {
-	initDB()
-	defer conn.Close()
+	user := demo.UserHandler{DB: nil}
 
 	e := echo.New()
 
@@ -59,7 +52,7 @@ func main() {
 		return c.String(http.StatusOK, "OK")
 	})
 	// Simple API with database access
-	e.GET("/users/:id", demo.GetUser)
+	e.GET("/users/:id", user.GetUser)
 
 	e.Logger.Fatal(e.Start(":8080"))
 }
