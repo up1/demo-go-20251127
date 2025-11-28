@@ -6,7 +6,6 @@ $docker compose up -d
 $docker compose ps
 ```
 
-
 ## Start websocket server
 ```
 $go mod tidy
@@ -18,5 +17,8 @@ Access to chat ui
 
 ## Start with PM2
 ```
+$npm i -g pm2
 $pm2 start pm2.config.js
+$pm2 status
+$pm2 log
 ```
