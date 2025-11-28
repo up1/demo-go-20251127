@@ -120,7 +120,7 @@ List of URLs
 * GET http://localhost:8080/users/3
 
 ## 5. Performance testing
-* [Go-wrk](go install github.com/tsliwowicz/go-wrk@latest)
+* [Go-wrk](https://github.com/tsliwowicz/go-wrk)
 * [Vegeta](https://github.com/tsenart/vegeta)
 
 ```
