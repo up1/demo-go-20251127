@@ -19,6 +19,7 @@ func main() {
 	e.Logger.Fatal(e.Start(":8080"))
 }
 
+// Solution 2
 func (r resource) hello2(c echo.Context) error {
 	return c.String(http.StatusOK, r.message)
 }
