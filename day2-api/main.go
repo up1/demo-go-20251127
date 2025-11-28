@@ -5,6 +5,11 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+
+	// Swagger
+	_ "api/docs" // Import generated swagger docs
+
+	echoSwagger "github.com/swaggo/echo-swagger"
 )
 
 type resource struct {
@@ -16,21 +21,44 @@ func NewResource(message string) resource {
 	return resource{message: message}
 }
 
+// Title: Swagger API Example
+// @version 1.0
+// @description This is a sample server for a Swagger API example.
+// @host localhost:8080
+// @BasePath /
 func main() {
 	r := NewResource("Hello, World v2!")
 	e := echo.New()
 	e.Use(middleware.Logger())
+
 	e.GET("/", hello("V1 Hello, World!"))
 	e.GET("/v2", r.hello2)
+
+	e.GET("/swagger/*", echoSwagger.WrapHandler)
+
 	e.Logger.Fatal(e.Start(":8080"))
 }
 
-// Solution 2
+// Hello2 API
+// @Summary Hello2 endpoint
+// @Description Returns a hello message from resource
+// @Tags hello
+// @Accept  json
+// @Produce  json
+// @Success 200 {string} string "Hello, World v2!"
+// @Router /v2 [get]
 func (r resource) hello2(c echo.Context) error {
 	return c.String(http.StatusOK, r.message)
 }
 
-// Solution 1
+// Hello API
+// @Summary Hello endpoint
+// @Description Returns a hello message
+// @Tags hello
+// @Accept  json
+// @Produce  json
+// @Success 200 {string} string "Hello, World!"
+// @Router / [get]
 func hello(message string) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		return c.String(http.StatusOK, message)

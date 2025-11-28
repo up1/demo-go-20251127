@@ -1,0 +1,38 @@
+basePath: /
+host: localhost:8080
+info:
+  contact: {}
+  description: This is a sample server for a Swagger API example.
+  version: "1.0"
+paths:
+  /:
+    get:
+      consumes:
+      - application/json
+      description: Returns a hello message
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Hello, World!
+          schema:
+            type: string
+      summary: Hello endpoint
+      tags:
+      - hello
+  /v2:
+    get:
+      consumes:
+      - application/json
+      description: Returns a hello message from resource
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Hello, World v2!
+          schema:
+            type: string
+      summary: Hello2 endpoint
+      tags:
+      - hello
+swagger: "2.0"
