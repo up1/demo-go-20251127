@@ -10,7 +10,7 @@ $cd api
 $go mod init api
 ```
 
-## 2. REST API Spexification
+## 2. REST API Specification
 
 API Specification
 ```
