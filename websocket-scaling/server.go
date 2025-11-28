@@ -24,6 +24,7 @@ var (
 	ctx = context.Background()
 )
 
+// Handle WebSocket connections
 func handleConnections(w http.ResponseWriter, r *http.Request) {
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
@@ -42,13 +43,14 @@ func handleConnections(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 
-		// ส่งข้อความไปยัง Redis Channel
+		// Publish message to Redis Channel
 		if err := rdb.Publish(ctx, "websocketChannel", msg).Err(); err != nil {
 			log.Println("Error publishing to Redis:", err)
 		}
 	}
 }
 
+// Handle messages from Redis and broadcast to all clients
 func handleRedisMessages() {
 	sub := rdb.Subscribe(ctx, "websocketChannel")
 	ch := sub.Channel()
@@ -59,6 +61,7 @@ func handleRedisMessages() {
 	}
 }
 
+// Broadcast messages to all clients
 func handleBroadcasts() {
 	for {
 		msg := <-broadcast
